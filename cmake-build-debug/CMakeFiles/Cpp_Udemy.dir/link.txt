@@ -1,0 +1,1 @@
+/usr/bin/c++.exe -g  -Wl,--enable-auto-import CMakeFiles/Cpp_Udemy.dir/FBullCowGame.cpp.o CMakeFiles/Cpp_Udemy.dir/main.cpp.o  -o Cpp_Udemy.exe -Wl,--out-implib,libCpp_Udemy.dll.a -Wl,--major-image-version,0,--minor-image-version,0 
