@@ -3,7 +3,6 @@
  * This acts as the view in a MVC pattern, and is responsible for all user interaction.
  * For game logic, see the FBullCowGame class.
  */
-
 #include <iostream>
 #include "FBullCowGame.h"
 
@@ -13,6 +12,8 @@ using int32 = int;
 /* notes: these are like contracts, which appears before real function definitions
  * I think they are good because it's easy to get a glimpse of what a class does
  */
+
+// function prototypes as outside a class
 void PrintIntro();
 void PlayGame();
 FText GetValidGuess();
@@ -21,7 +22,6 @@ void PrintGameSummary();
 FBullCowGame BCGame;
 
 int main() {
-    PrintIntro();
     PlayGame();
     return 0;
 }
@@ -29,8 +29,8 @@ int main() {
 void PlayGame() {
     do {
         BCGame.Reset();
+        PrintIntro();
 
-        // TODO change from FOR to WHILE loop once we are validating inputs
         while (BCGame.GetCurrentTry() <= BCGame.GetMaxTries() && !BCGame.IsGameWon()) {
             FText Guess = GetValidGuess();
 
@@ -43,7 +43,6 @@ void PlayGame() {
         PrintGameSummary();
 
     } while (AskToPlayAgain());
-    // TODO: Summarize game here
 }
 
 void PrintIntro() {
@@ -53,43 +52,42 @@ void PrintIntro() {
 
 FText GetValidGuess() {
     FText Guess;
-    std::list<EGuessStatus> StatusList;
+    std::list<EGuessError> GuessErrorList;
 
     do {
-        std::cout << "\nTry " << BCGame.GetCurrentTry() << ". Enter your guess: ";
+        std::cout << "\nTry " << BCGame.GetCurrentTry() << "/" << BCGame.GetMaxTries() << ". Enter your guess: ";
         getline(std::cin, Guess);
-        StatusList = BCGame.CheckGuessValidity(Guess);
+        GuessErrorList = BCGame.CheckGuessValidity(Guess);
         std::string strToReturn;
-        if (!StatusList.empty() || !(StatusList.front() == EGuessStatus::OK)) {
-            for (auto status : StatusList) {
+        if (!GuessErrorList.empty()) {
+            for (auto status : GuessErrorList) {
                 switch (status) {
-                    case EGuessStatus::Wong_Length:
+                    case EGuessError::Wong_Length:
                         strToReturn += "Please enter a ";
                         strToReturn += std::to_string(BCGame.GetHiddenWordLength());
                         strToReturn += " letter word.\n";
                         break;
-                    case EGuessStatus::Not_Lowercase:
+                    case EGuessError::Not_Lowercase:
                         strToReturn += "Please only enter all lowercase word.\n";
                         break;
-                    case EGuessStatus::Not_Isogram:
+                    case EGuessError::Not_Isogram:
                         strToReturn += "Please enter a word without repeating letters.\n";
                         break;
                     default:
-                        // assuming the guess is valid
+                        strToReturn += "Everything is good.\n";
                         break;
                 }
             }
+
+            std::cout << "You got " << GuessErrorList.size() << " errors.\n" << strToReturn;
         }
-
-        std::cout << "You got " << StatusList.size() << " errors.\n" << strToReturn;
-
-    } while (!StatusList.empty() || !(StatusList.front() == EGuessStatus::OK));
+    } while (!GuessErrorList.empty());
 
     return Guess;
 }
 
 bool AskToPlayAgain() {
-    std::cout << "Do you want to play again with the same hidden word? (y / n)\n";
+    std::cout << "Do you want to play again? (y / n)\n";
     FText Response;
     getline(std::cin, Response);
     return Response[0] == 'y' || Response[0] == 'Y';
