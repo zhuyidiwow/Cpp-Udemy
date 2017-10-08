@@ -53,27 +53,37 @@ void PrintIntro() {
 
 FText GetValidGuess() {
     FText Guess;
-    EGuessStatus Status;
+    std::list<EGuessStatus> StatusList;
 
     do {
         std::cout << "\nTry " << BCGame.GetCurrentTry() << ". Enter your guess: ";
         getline(std::cin, Guess);
-        Status = BCGame.CheckGuessValidity(Guess);
-        switch (Status) {
-            case EGuessStatus::Wong_Length:
-                std::cout << "Please enter a " << BCGame.GetHiddenWordLength() << " letter word.\n";
-                break;
-            case EGuessStatus::Not_Lowercase:
-                std::cout << "Please only enter all lowercase word\n";
-                break;
-            case EGuessStatus::Not_Isogram:
-                std::cout << "Please enter a word without repeating letters.\n";
-                break;
-            default:
-                // assuming the guess is valid
-                break;
+        StatusList = BCGame.CheckGuessValidity(Guess);
+        std::string strToReturn;
+        if (!StatusList.empty() || !(StatusList.front() == EGuessStatus::OK)) {
+            for (auto status : StatusList) {
+                switch (status) {
+                    case EGuessStatus::Wong_Length:
+                        strToReturn += "Please enter a ";
+                        strToReturn += std::to_string(BCGame.GetHiddenWordLength());
+                        strToReturn += " letter word.\n";
+                        break;
+                    case EGuessStatus::Not_Lowercase:
+                        strToReturn += "Please only enter all lowercase word.\n";
+                        break;
+                    case EGuessStatus::Not_Isogram:
+                        strToReturn += "Please enter a word without repeating letters.\n";
+                        break;
+                    default:
+                        // assuming the guess is valid
+                        break;
+                }
+            }
         }
-    } while (Status != EGuessStatus::OK);
+
+        std::cout << "You got " << StatusList.size() << " errors.\n" << strToReturn;
+
+    } while (!StatusList.empty() || !(StatusList.front() == EGuessStatus::OK));
 
     return Guess;
 }

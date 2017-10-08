@@ -1,4 +1,8 @@
 #include "FBullCowGame.h"
+#include <map>
+#include <list>
+
+#define TMap std::map // no semicolon in the end
 
 using FString = std::string;
 using int32 = int;
@@ -21,23 +25,22 @@ void FBullCowGame::Reset() {
     bIsGameWon = false;
 }
 
-EGuessStatus FBullCowGame::CheckGuessValidity(FString Guess) const {
-    // if the guest isn't isogram, return an error
-    if (!IsGuessIsogram(Guess)) {
-        return EGuessStatus::Not_Isogram;
+std::list<EGuessStatus> FBullCowGame::CheckGuessValidity(FString Guess) const {
+    std::list <EGuessStatus> statusList;
+
+    if (!IsIsogram(Guess)) {
+        statusList.push_back(EGuessStatus::Not_Isogram);
     }
-    // if the guess isn't all lowercase, return an error
-    else if (false) {
-        return EGuessStatus::Not_Lowercase;
+    if (!IsAllLowerCase(Guess)) {
+        statusList.push_back(EGuessStatus::Not_Lowercase);
     }
-    // if the guess length is wrong, return an error
-    else if (IsGuessInCorrectLength(Guess)) {
-        return EGuessStatus::Wong_Length;
+    if (IsInCorrectLength(Guess)) {
+        statusList.push_back(EGuessStatus::Wong_Length);
+    } else {
+        statusList.push_back(EGuessStatus::OK);
     }
-    // otherwise, return OK
-    else {
-        return EGuessStatus::OK;
-    }
+
+    return statusList;
 }
 
 // receive a valid guess, increment turn, and returns count
@@ -67,22 +70,36 @@ FBullCowCount FBullCowGame::SubmitGuess(FString Guess) {
     return BullCowCount;
 }
 
-bool FBullCowGame::IsGuessIsogram(FString Guess) const {
-    for (int i = 0; i < Guess.length() - 1; ++i) {
-        for (int j = i + 1; j < Guess.length(); ++j) {
-            if (Guess[i] == Guess[j]) {
-                return false;
-            }
+bool FBullCowGame::IsIsogram(FString Guess) const {
+    if (Guess.length() <= 1) {
+        return true;
+    }
+
+    TMap <char, bool> LetterSeen;
+
+    // this is O(n)!
+    for (char Letter : Guess) {
+        Letter = static_cast<char>(tolower(Letter));
+
+        if (LetterSeen[Letter]) {
+            return false;
+        } else {
+            LetterSeen[Letter] = true;
+        }
+    }
+
+    return true;
+}
+
+bool FBullCowGame::IsInCorrectLength(FString Guess) const {
+    return Guess.length() != GetHiddenWordLength();
+}
+
+bool FBullCowGame::IsAllLowerCase(FString Guess) const {
+    for (auto Letter : Guess) {
+        if (!islower(Letter)) {
+            return false;
         }
     }
     return true;
 }
-
-bool FBullCowGame::IsGuessInCorrectLength(FString Guess) const {
-    return Guess.length() != GetHiddenWordLength();
-}
-
-bool FBullCowGame::IsGuessAllLowerCase(FString Guess) const {
-    return false;
-}
-

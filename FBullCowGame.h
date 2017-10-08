@@ -1,5 +1,6 @@
 #pragma once
 #include <string>
+#include <list>
 
 // FString is mutable strings in Unreal's context
 using FString = std::string;
@@ -32,7 +33,7 @@ public:
 
     // Notes: in C++, it's ok to just provide the type of a parameter without giving a name to it
     // this feature looks quite handy
-    EGuessStatus CheckGuessValidity(FString) const;
+    std::list<EGuessStatus> CheckGuessValidity(FString) const;
 
     // provide a method for counting bulls and cows, and increasing try #
     FBullCowCount SubmitGuess(FString);
@@ -45,7 +46,9 @@ private:
     FString MyHiddenWord;
     bool bIsGameWon;
 
-    bool IsGuessIsogram(FString) const;
-    bool IsGuessInCorrectLength(FString) const;
-    bool IsGuessAllLowerCase(FString) const;
+
+    bool IsIsogram(FString) const;
+    bool IsInCorrectLength(FString) const;
+    bool IsAllLowerCase(FString) const;
+    bool isLower(char) const;
 };
