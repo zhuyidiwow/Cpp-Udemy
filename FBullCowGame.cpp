@@ -23,9 +23,28 @@ bool FBullCowGame::IsGameWon() const {
     return false;
 }
 
-EWordStatus FBullCowGame::CheckGuessValidity(FString Guess) const {
-    return EWordStatus::OK;
+
+EGuessStatus FBullCowGame::CheckGuessValidity(FString Guess) const {
+    // if the guest isn't isogram, return an error
+    if (!IsGuessIsogram(Guess)) {
+        return EGuessStatus::Not_Isogram;
+    }
+    // if the guess isn't all lowercase, return an error
+    else if (false) {
+        return EGuessStatus::Not_Lowercase;
+    }
+    // if the guess length is wrong, return an error
+    else if (Guess.length() != GetHiddenWordLength()) {
+        return EGuessStatus::Wong_Length;
+    }
+    // otherwise, return OK
+    else {
+        return EGuessStatus::OK;
+    }
+
+    return EGuessStatus::OK;
 }
+
 
 // receive a valid guess, increment turn, and returns count
 FBullCowCount FBullCowGame::SubmitGuess(FString Guess) {
@@ -49,5 +68,24 @@ FBullCowCount FBullCowGame::SubmitGuess(FString Guess) {
         }
     }
     return BullCowCount;
+}
+
+bool FBullCowGame::IsGuessIsogram(FString Guess) const {
+    for (int i = 0; i < Guess.length() - 1; ++i) {
+        for (int j = i + 1; j < Guess.length(); ++j) {
+            if (Guess[i] == Guess[j]) {
+                return false;
+            }
+        }
+    }
+    return true;
+}
+
+bool FBullCowGame::IsGuessInCorrectLengtg(FString Guess) const {
+    return false;
+}
+
+bool FBullCowGame::IsGuessAllLowerCase(FString Guess) const {
+    return false;
 }
 

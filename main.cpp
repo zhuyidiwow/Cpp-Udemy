@@ -15,7 +15,7 @@ using int32 = int;
  */
 void PrintIntro();
 void PlayGame();
-FText GetGuess();
+FText GetValidGuess();
 void PrintGuess(FText strToPrint);
 bool AskToPlayAgain();
 FBullCowGame BCGame;
@@ -31,15 +31,12 @@ void PlayGame() {
 
     // TODO change from FOR to WHILE loop once we are validating inputs
     while (BCGame.GetCurrentTry() < BCGame.GetMaxTries()) {
-        FText Guess = GetGuess();
+        FText Guess = GetValidGuess();
 
         // submit the guess
         // print number of bulls and cows
-        if (BCGame.CheckGuessValidity(Guess)) {
-            FBullCowCount BullCowCount = BCGame.SubmitGuess(Guess);
-            std::cout << "Bull = " << BullCowCount.Bulls << ", ";
-            std::cout << "Cow = " << BullCowCount.Cows << ", ";
-        }
+        FBullCowCount BullCowCount = BCGame.SubmitGuess(Guess);
+        std::cout << "Bull = " << BullCowCount.Bulls << ", Cow = " << BullCowCount.Cows << ".";
     }
     // TODO: Summarize game here
 }
@@ -49,10 +46,29 @@ void PrintIntro() {
     std::cout << "Can you guess the " << BCGame.GetHiddenWordLength() << " letter isogram I'm thinking of?\n";
 }
 
-FText GetGuess() {
+FText GetValidGuess() {
     FText Guess;
-    std::cout << "\nTry " << BCGame.GetCurrentTry() << ". Enter your guess: ";
-    getline(std::cin, Guess);
+    EGuessStatus Status;
+
+    do {
+        std::cout << "\nTry " << BCGame.GetCurrentTry() << ". Enter your guess: ";
+        getline(std::cin, Guess);
+        Status = BCGame.CheckGuessValidity(Guess);
+        switch (Status) {
+            case EGuessStatus::Wong_Length:
+                std::cout << "Please enter a " << BCGame.GetHiddenWordLength() << " letter word.\n";
+                break;
+            case EGuessStatus::Not_Lowercase:
+                std::cout << "Please only enter all lowercase word\n";
+                break;
+            case EGuessStatus::Not_Isogram:
+                std::cout << "Please enter a word without repeating letters.\n";
+                break;
+            default:
+                break;
+        }
+    } while (Status != EGuessStatus::OK);
+
     return Guess;
 }
 

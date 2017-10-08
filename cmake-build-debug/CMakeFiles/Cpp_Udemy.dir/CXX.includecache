@@ -1,0 +1,22 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/cygdrive/c/Users/yidiz/Codes/Cpp Udemy/FBullCowGame.cpp
+FBullCowGame.h
+/cygdrive/c/Users/yidiz/Codes/Cpp Udemy/FBullCowGame.h
+
+/cygdrive/c/Users/yidiz/Codes/Cpp Udemy/FBullCowGame.h
+string
+-
+
+/cygdrive/c/Users/yidiz/Codes/Cpp Udemy/main.cpp
+iostream
+-
+FBullCowGame.h
+/cygdrive/c/Users/yidiz/Codes/Cpp Udemy/FBullCowGame.h
+
