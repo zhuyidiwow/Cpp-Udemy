@@ -16,8 +16,8 @@ using int32 = int;
 void PrintIntro();
 void PlayGame();
 FText GetValidGuess();
-void PrintGuess(FText strToPrint);
 bool AskToPlayAgain();
+void PrintGameSummary();
 FBullCowGame BCGame;
 
 int main() {
@@ -27,17 +27,22 @@ int main() {
 }
 
 void PlayGame() {
-    BCGame.Reset();
+    do {
+        BCGame.Reset();
 
-    // TODO change from FOR to WHILE loop once we are validating inputs
-    while (BCGame.GetCurrentTry() < BCGame.GetMaxTries()) {
-        FText Guess = GetValidGuess();
+        // TODO change from FOR to WHILE loop once we are validating inputs
+        while (BCGame.GetCurrentTry() <= BCGame.GetMaxTries() && !BCGame.IsGameWon()) {
+            FText Guess = GetValidGuess();
 
-        // submit the guess
-        // print number of bulls and cows
-        FBullCowCount BullCowCount = BCGame.SubmitGuess(Guess);
-        std::cout << "Bull = " << BullCowCount.Bulls << ", Cow = " << BullCowCount.Cows << ".";
-    }
+            // submit the guess
+            // print number of bulls and cows
+            FBullCowCount BullCowCount = BCGame.SubmitGuess(Guess);
+            std::cout << "Bull = " << BullCowCount.Bulls << ", Cow = " << BullCowCount.Cows << ".\n";
+        }
+
+        PrintGameSummary();
+
+    } while (AskToPlayAgain());
     // TODO: Summarize game here
 }
 
@@ -65,6 +70,7 @@ FText GetValidGuess() {
                 std::cout << "Please enter a word without repeating letters.\n";
                 break;
             default:
+                // assuming the guess is valid
                 break;
         }
     } while (Status != EGuessStatus::OK);
@@ -72,13 +78,17 @@ FText GetValidGuess() {
     return Guess;
 }
 
-void PrintGuess(FText strToPrint) {
-    std::cout << "You typed: " + strToPrint + "\n";
-}
-
 bool AskToPlayAgain() {
-    std::cout << "Do you want to play again?\n";
+    std::cout << "Do you want to play again with the same hidden word? (y / n)\n";
     FText Response;
     getline(std::cin, Response);
     return Response[0] == 'y' || Response[0] == 'Y';
+}
+
+void PrintGameSummary() {
+    if (BCGame.IsGameWon()) {
+        std::cout << "\nCongratulations! You Win!\n";
+    } else {
+        std::cout << "\nYou Lose!\n";
+    }
 }

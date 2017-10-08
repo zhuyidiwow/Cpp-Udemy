@@ -8,6 +8,7 @@ FBullCowGame::FBullCowGame() { Reset(); }
 int32 FBullCowGame::GetMaxTries() const { return MyMaxTries; }
 int32 FBullCowGame::GetCurrentTry() const { return MyCurrentTry; }
 int32 FBullCowGame::GetHiddenWordLength() const { return static_cast<int32>(MyHiddenWord.length()); }
+bool FBullCowGame::IsGameWon() const { return bIsGameWon; }
 
 void FBullCowGame::Reset() {
     // constants are usually named with all capital
@@ -17,12 +18,8 @@ void FBullCowGame::Reset() {
     MyCurrentTry = 1;
     MyMaxTries = MAX_TRIES;
     MyHiddenWord = HIDDEN_WORD;
+    bIsGameWon = false;
 }
-
-bool FBullCowGame::IsGameWon() const {
-    return false;
-}
-
 
 EGuessStatus FBullCowGame::CheckGuessValidity(FString Guess) const {
     // if the guest isn't isogram, return an error
@@ -34,17 +31,14 @@ EGuessStatus FBullCowGame::CheckGuessValidity(FString Guess) const {
         return EGuessStatus::Not_Lowercase;
     }
     // if the guess length is wrong, return an error
-    else if (Guess.length() != GetHiddenWordLength()) {
+    else if (IsGuessInCorrectLength(Guess)) {
         return EGuessStatus::Wong_Length;
     }
     // otherwise, return OK
     else {
         return EGuessStatus::OK;
     }
-
-    return EGuessStatus::OK;
 }
-
 
 // receive a valid guess, increment turn, and returns count
 FBullCowCount FBullCowGame::SubmitGuess(FString Guess) {
@@ -67,6 +61,9 @@ FBullCowCount FBullCowGame::SubmitGuess(FString Guess) {
             }
         }
     }
+
+    bIsGameWon = BullCowCount.Bulls == GetHiddenWordLength();
+
     return BullCowCount;
 }
 
@@ -81,8 +78,8 @@ bool FBullCowGame::IsGuessIsogram(FString Guess) const {
     return true;
 }
 
-bool FBullCowGame::IsGuessInCorrectLengtg(FString Guess) const {
-    return false;
+bool FBullCowGame::IsGuessInCorrectLength(FString Guess) const {
+    return Guess.length() != GetHiddenWordLength();
 }
 
 bool FBullCowGame::IsGuessAllLowerCase(FString Guess) const {
