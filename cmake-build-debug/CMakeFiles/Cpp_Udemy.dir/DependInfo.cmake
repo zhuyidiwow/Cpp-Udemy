@@ -4,10 +4,10 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_CXX
-  "/cygdrive/c/Users/yidiz/Codes/Cpp Udemy/FBullCowGame.cpp" "/cygdrive/c/Users/yidiz/Codes/Cpp Udemy/cmake-build-debug/CMakeFiles/Cpp_Udemy.dir/FBullCowGame.cpp.o"
-  "/cygdrive/c/Users/yidiz/Codes/Cpp Udemy/main.cpp" "/cygdrive/c/Users/yidiz/Codes/Cpp Udemy/cmake-build-debug/CMakeFiles/Cpp_Udemy.dir/main.cpp.o"
+  "/Users/yidizhu/Desktop/Code/Cpp-Udemy/FBullCowGame.cpp" "/Users/yidizhu/Desktop/Code/Cpp-Udemy/cmake-build-debug/CMakeFiles/Cpp_Udemy.dir/FBullCowGame.cpp.o"
+  "/Users/yidizhu/Desktop/Code/Cpp-Udemy/main.cpp" "/Users/yidizhu/Desktop/Code/Cpp-Udemy/cmake-build-debug/CMakeFiles/Cpp_Udemy.dir/main.cpp.o"
   )
-set(CMAKE_CXX_COMPILER_ID "GNU")
+set(CMAKE_CXX_COMPILER_ID "AppleClang")
 
 # The include file search paths:
 set(CMAKE_CXX_TARGET_INCLUDE_PATH

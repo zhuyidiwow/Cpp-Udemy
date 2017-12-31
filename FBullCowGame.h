@@ -46,6 +46,6 @@ private:
     bool bIsGameWon;
 
     bool IsGuessIsogram(FString) const;
-    bool IsGuessInCorrectLength(FString) const;
+    bool IsGuessWrongLength(FString) const;
     bool IsGuessAllLowerCase(FString) const;
 };

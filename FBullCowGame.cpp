@@ -27,11 +27,12 @@ EGuessStatus FBullCowGame::CheckGuessValidity(FString Guess) const {
         return EGuessStatus::Not_Isogram;
     }
     // if the guess isn't all lowercase, return an error
+    //TODO: find a way to detect lower case input
     else if (false) {
         return EGuessStatus::Not_Lowercase;
     }
     // if the guess length is wrong, return an error
-    else if (IsGuessInCorrectLength(Guess)) {
+    else if (IsGuessWrongLength(Guess)) {
         return EGuessStatus::Wong_Length;
     }
     // otherwise, return OK
@@ -78,7 +79,7 @@ bool FBullCowGame::IsGuessIsogram(FString Guess) const {
     return true;
 }
 
-bool FBullCowGame::IsGuessInCorrectLength(FString Guess) const {
+bool FBullCowGame::IsGuessWrongLength(FString Guess) const {
     return Guess.length() != GetHiddenWordLength();
 }
 

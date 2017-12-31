@@ -26,11 +26,15 @@ int main() {
     return 0;
 }
 
+void PrintIntro() {
+    std::cout << "Welcome to Bulls and Cows, a fun word game.\n";
+    std::cout << "Can you guess the " << BCGame.GetHiddenWordLength() << " letter isogram I'm thinking of?\n";
+}
+
 void PlayGame() {
     do {
         BCGame.Reset();
 
-        // TODO change from FOR to WHILE loop once we are validating inputs
         while (BCGame.GetCurrentTry() <= BCGame.GetMaxTries() && !BCGame.IsGameWon()) {
             FText Guess = GetValidGuess();
 
@@ -44,11 +48,6 @@ void PlayGame() {
 
     } while (AskToPlayAgain());
     // TODO: Summarize game here
-}
-
-void PrintIntro() {
-    std::cout << "Welcome to Bulls and Cows, a fun word game.\n";
-    std::cout << "Can you guess the " << BCGame.GetHiddenWordLength() << " letter isogram I'm thinking of?\n";
 }
 
 FText GetValidGuess() {
