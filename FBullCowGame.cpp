@@ -31,6 +31,7 @@ void FBullCowGame::Reset() {
     bIsGameWon = false;
 }
 
+<<<<<<< HEAD
 std::list<EGuessError> FBullCowGame::CheckGuessValidity(FString Guess) const {
     std::list <EGuessError> statusList;
 
@@ -39,6 +40,21 @@ std::list<EGuessError> FBullCowGame::CheckGuessValidity(FString Guess) const {
     }
     if (!IsAllLowerCase(Guess)) {
         statusList.push_back(EGuessError::Not_Lowercase);
+=======
+EGuessStatus FBullCowGame::CheckGuessValidity(FString Guess) const {
+    // if the guest isn't isogram, return an error
+    if (!IsGuessIsogram(Guess)) {
+        return EGuessStatus::Not_Isogram;
+    }
+    // if the guess isn't all lowercase, return an error
+    //TODO: find a way to detect lower case input
+    else if (false) {
+        return EGuessStatus::Not_Lowercase;
+    }
+    // if the guess length is wrong, return an error
+    else if (IsGuessWrongLength(Guess)) {
+        return EGuessStatus::Wong_Length;
+>>>>>>> 03026110997fc753a371cfc8d5ab951d5589afa9
     }
     if (IsInCorrectLength(Guess)) {
         statusList.push_back(EGuessError::Wong_Length);
@@ -90,7 +106,11 @@ bool FBullCowGame::IsIsogram(FString Guess) const {
     return true;
 }
 
+<<<<<<< HEAD
 bool FBullCowGame::IsInCorrectLength(FString Guess) const {
+=======
+bool FBullCowGame::IsGuessWrongLength(FString Guess) const {
+>>>>>>> 03026110997fc753a371cfc8d5ab951d5589afa9
     return Guess.length() != GetHiddenWordLength();
 }
 

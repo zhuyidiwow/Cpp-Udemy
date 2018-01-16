@@ -33,11 +33,4 @@
 
 *.idea
 .idea/*
-.idea/
-.idea
-.idea/.name
-.idea/workspace.xml
-.idea/workspace.xml
-.idea/.name
-.idea/.name
-.idea/workspace.xml
+cmake-build-debug/*

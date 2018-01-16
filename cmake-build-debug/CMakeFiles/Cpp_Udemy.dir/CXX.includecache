@@ -6,8 +6,9 @@
 
 #IncludeRegexTransform: 
 
-/cygdrive/c/Users/yidiz/Codes/Cpp Udemy/FBullCowGame.cpp
+/Users/yidizhu/Desktop/Code/Cpp-Udemy/FBullCowGame.cpp
 FBullCowGame.h
+<<<<<<< HEAD
 /cygdrive/c/Users/yidiz/Codes/Cpp Udemy/FBullCowGame.h
 map
 -
@@ -15,16 +16,19 @@ list
 -
 ctime
 -
+=======
+/Users/yidizhu/Desktop/Code/Cpp-Udemy/FBullCowGame.h
+>>>>>>> 03026110997fc753a371cfc8d5ab951d5589afa9
 
-/cygdrive/c/Users/yidiz/Codes/Cpp Udemy/FBullCowGame.h
+/Users/yidizhu/Desktop/Code/Cpp-Udemy/FBullCowGame.h
 string
 -
 list
 -
 
-/cygdrive/c/Users/yidiz/Codes/Cpp Udemy/main.cpp
+/Users/yidizhu/Desktop/Code/Cpp-Udemy/main.cpp
 iostream
 -
 FBullCowGame.h
-/cygdrive/c/Users/yidiz/Codes/Cpp Udemy/FBullCowGame.h
+/Users/yidizhu/Desktop/Code/Cpp-Udemy/FBullCowGame.h
 

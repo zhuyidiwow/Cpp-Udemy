@@ -47,7 +47,13 @@ private:
     FString MyHiddenWord;
     bool bIsGameWon;
 
+<<<<<<< HEAD
     bool IsIsogram(FString) const;
     bool IsInCorrectLength(FString) const;
     bool IsAllLowerCase(FString) const;
+=======
+    bool IsGuessIsogram(FString) const;
+    bool IsGuessWrongLength(FString) const;
+    bool IsGuessAllLowerCase(FString) const;
+>>>>>>> 03026110997fc753a371cfc8d5ab951d5589afa9
 };

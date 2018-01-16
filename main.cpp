@@ -26,6 +26,11 @@ int main() {
     return 0;
 }
 
+void PrintIntro() {
+    std::cout << "Welcome to Bulls and Cows, a fun word game.\n";
+    std::cout << "Can you guess the " << BCGame.GetHiddenWordLength() << " letter isogram I'm thinking of?\n";
+}
+
 void PlayGame() {
     do {
         BCGame.Reset();
@@ -43,11 +48,6 @@ void PlayGame() {
         PrintGameSummary();
 
     } while (AskToPlayAgain());
-}
-
-void PrintIntro() {
-    std::cout << "Welcome to Bulls and Cows, a fun word game.\n";
-    std::cout << "Can you guess the " << BCGame.GetHiddenWordLength() << " letter isogram I'm thinking of?\n";
 }
 
 FText GetValidGuess() {
